@@ -1,0 +1,161 @@
+{
+  "project": "Future Self AI",
+  "version": "Sprint Plan v2",
+  "duration": "2 Weeks",
+  "goal": "Deliver a working prototype of Future Self AI with strong foundations, modularity, and scalability.",
+  "week_1": {
+    "theme": "Foundations + Onboarding + Persona Creation",
+    "days": {
+      "Day 1-2": [
+        "Setup React 18 + TypeScript + TailwindCSS + ShadCN UI",
+        "Initialize Supabase project (Postgres + pgvector + Auth + Realtime)",
+        "Setup Vercel deployment pipeline"
+      ],
+      "Day 3": [
+        "Implement Supabase Auth with email + Google OAuth"
+      ],
+      "Day 4-5": [
+        "Build multi-step onboarding form (progress indicators)",
+        "Capture: current situation, goals, values, communication style",
+        "Store onboarding data in `user_profiles` table"
+      ],
+      "Day 6-7": [
+        "Trigger n8n workflow after onboarding",
+        "Generate persona system prompt via GPT-4",
+        "Generate embeddings with ada-002 for onboarding data",
+        "Save persona in `personas` and embeddings in `user_memories`",
+        "Return intro message from Future Self persona"
+      ]
+    }
+  },
+  "week_2": {
+    "theme": "Chat Interface + Memory + Contextual AI",
+    "days": {
+      "Day 8-9": [
+        "Build chat interface (React + Supabase Realtime)",
+        "Enable real-time messaging & conversation history",
+        "Store chats in `conversations` table"
+      ],
+      "Day 10": [
+        "Implement Message Analysis Pipeline",
+        "Use GPT-3.5 for sentiment, significance, topics",
+        "Generate embeddings via ada-002"
+      ],
+      "Day 11-12": [
+        "Implement Context Retrieval",
+        "Use pgvector similarity search",
+        "Inject relevant memories into GPT-4 prompts for contextual responses"
+      ],
+      "Day 13": [
+        "Add Communication Style Matching",
+        "Inject user\u2019s communication style into persona system prompt",
+        "Prepare hooks for dynamic updates"
+      ],
+      "Day 14": [
+        "Testing, bug fixes, night mode",
+        "Polish UI with Framer Motion",
+        "Final deployment"
+      ]
+    }
+  },
+  "database_schema": {
+    "user_profiles": [
+      "id",
+      "user_id",
+      "onboarding_data",
+      "current_goals",
+      "values",
+      "communication_style",
+      "timestamps"
+    ],
+    "personas": [
+      "id",
+      "user_id",
+      "timeframe",
+      "system_prompt",
+      "personality_summary",
+      "communication_style",
+      "achievements",
+      "last_updated"
+    ],
+    "user_memories": [
+      "id",
+      "user_id",
+      "content",
+      "embedding",
+      "category",
+      "significance",
+      "metadata",
+      "created_at"
+    ],
+    "conversations": [
+      "id",
+      "user_id",
+      "persona_id",
+      "messages",
+      "session_start",
+      "last_message"
+    ],
+    "user_analytics": [
+      "id",
+      "user_id",
+      "event_type",
+      "event_data",
+      "created_at"
+    ]
+  },
+  "system_flows": {
+    "onboarding_persona_generation": [
+      "User completes onboarding form",
+      "Data stored in user_profiles",
+      "n8n workflow triggered",
+      "GPT-4 generates persona \u2192 stored in personas",
+      "Embeddings created \u2192 stored in user_memories",
+      "Frontend notified with intro persona message"
+    ],
+    "message_processing": [
+      "User sends chat message \u2192 stored in conversations",
+      "n8n pipeline triggered",
+      "GPT-3.5 analyzes sentiment, topics, significance",
+      "Embedding created (ada-002)",
+      "If significant \u2192 store in user_memories",
+      "Log event in user_analytics",
+      "Retrieve context via pgvector",
+      "GPT-4 generates contextual response \u2192 stored and shown in chat"
+    ]
+  },
+  "tech_stack": {
+    "frontend": [
+      "React 18",
+      "TypeScript",
+      "TailwindCSS",
+      "ShadCN UI",
+      "Framer Motion",
+      "Lucide Icons"
+    ],
+    "state_management": [
+      "React Context API",
+      "Zustand (optional)"
+    ],
+    "notifications": [
+      "Sonner",
+      "Notiflix"
+    ],
+    "backend": [
+      "Supabase (Postgres + pgvector + Auth + Realtime + Storage)"
+    ],
+    "automation": [
+      "n8n"
+    ],
+    "ai": [
+      "GPT-4 (persona, chat)",
+      "GPT-3.5 (analysis)",
+      "text-embedding-ada-002 (embeddings)"
+    ],
+    "hosting": [
+      "Vercel (frontend)",
+      "Supabase (backend)"
+    ]
+  },
+  "vision": "Deliver modular, future-proof personal AI system with scalable DB schema, modular prompts, and evolving persona updates."
+}
